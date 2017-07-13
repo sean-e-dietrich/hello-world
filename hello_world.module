@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Interaction with content_type_vocab_hello_world module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function hello_world_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->getEntityTypeId() == 'node' && $entity->bundle() == 'hello_world_article') {
+    $build['hello_world_text'] = array(
+      '#markup' => '<p><em>Content starts here!</em></p>',
+    );
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function hello_world_theme($existing, $type, $theme, $path) {
+  return array(
+    'block__hello_world' => array(
+      'render element' => 'elements',
+      'base hook' => 'block',
+    ),
+  );
+}
